@@ -5,6 +5,7 @@ from product import Product
 class Cart:
     def __init__(self):
         self.items = {}  # {product: quantity}
+        self.mdc = {} # produit de coter
 
     def add_product(self, product: Product, quantity: int):
         if product.stock < quantity:
@@ -27,4 +28,9 @@ class Cart:
                           for product, quantity in self.items.items()])
     
     def get_item_count(self):
-        print(f'il y a {sum(quantity for quantity in self.items.values())} produits dans votre panier')
+        print(f'il y a {sum(quantity for quantity in self.items.values())} produits dans votre panier')    
+    def mettre_de_cote(self, product: Product):
+        if product in self.items :
+            quantity = self.items[product]
+            self.mdc[product] = self.mdc.get(product, 0) + quantity
+            del self.items[product]
