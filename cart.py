@@ -5,6 +5,7 @@ from product import Product
 class Cart:
     def __init__(self):
         self.items = {}  # {product: quantity}
+        self.mdc = {} # produit de coter
 
     def add_product(self, product: Product, quantity: int):
         if product.stock < quantity:
@@ -25,3 +26,9 @@ class Cart:
             return "Your cart is empty."
         return "\n".join([f"{product.name} x {quantity} - {product.price * quantity}€"
                           for product, quantity in self.items.items()])
+    
+    def mettre_de_cote(self, product: Product):
+        if product in self.items :
+            quantity = self.items[product]
+            self.mdc[product] = self.mdc.get(product, 0) + quantity
+            del self.items[product]

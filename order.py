@@ -8,6 +8,7 @@ class Order:
             raise ValueError("Cart is empty. Cannot place an order.")
         self.items = cart.items
         self.total = cart.calculate_total()
+        self.discount = 0
 
     def place_order(self):
         for product, quantity in self.items.items():
@@ -17,3 +18,13 @@ class Order:
     def view_order(self):
         return "\n".join([f"{product.name} x {quantity}" for product, quantity in self.items.items()]) + \
                f"\nTotal: {self.total:.2f}€"
+    
+    def discount_code(self, code: str):
+        codes = {"SOLDE10": 0.1, "SOLDE20": 0.2}
+        if code in codes:
+            remise = codes[code]
+            self.discount = self.total * remise
+            self.total -= self.discount
+            return f"Code apply successfully! Reduction: {self.discount:.2f}€"
+        else:
+            return "Code invalid"
