@@ -17,3 +17,11 @@ class Order:
     def view_order(self):
         return "\n".join([f"{product.name} x {quantity}" for product, quantity in self.items.items()]) + \
                f"\nTotal: {self.total:.2f}€"
+    
+    def generate_receipt(self):
+        receipt = "Order Receipt:\n"
+        receipt += "\n".join([f"{product.name} x {quantity} - {product.price * quantity:.2f}€" for product, quantity in self.items.items()])
+        receipt += f"\nTotal: {self.total:.2f}€"
+        print(f'{receipt}')
+        return receipt
+
