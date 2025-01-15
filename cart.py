@@ -27,4 +27,4 @@ class Cart:
                           for product, quantity in self.items.items()])
     
     def get_item_count(self):
-        return sum(quantity for quantity in self.items.values())
+        print(f'il y a {sum(quantity for quantity in self.items.values())} produits dans votre panier')
