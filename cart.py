@@ -29,6 +29,7 @@ class Cart:
     
     def get_item_count(self):
         print(f'il y a {sum(quantity for quantity in self.items.values())} produits dans votre panier')    
+    
     def mettre_de_cote(self, product: Product):
         if product in self.items :
             quantity = self.items[product]

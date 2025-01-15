@@ -19,14 +19,6 @@ class Order:
         return "\n".join([f"{product.name} x {quantity}" for product, quantity in self.items.items()]) + \
                f"\nTotal: {self.total:.2f}€"
     
-    def generate_receipt(self):
-        receipt = "Order Receipt:\n"
-        receipt += "\n".join([f"{product.name} x {quantity} - {product.price * quantity:.2f}€" for product, quantity in self.items.items()])
-        receipt += f"\nTotal: {self.total:.2f}€"
-        print(f'{receipt}')
-        return receipt
-
-    
     def discount_code(self, code: str):
         codes = {"SOLDE10": 0.1, "SOLDE20": 0.2}
         if code in codes:
@@ -36,3 +28,10 @@ class Order:
             return f"Code apply successfully! Reduction: {self.discount:.2f}€"
         else:
             return "Code invalid"
+        
+    def generate_receipt(self):
+        receipt = "Order Receipt:\n"
+        receipt += "\n".join([f"{product.name} x {quantity} - {product.price * quantity:.2f}€" for product, quantity in self.items.items()])
+        receipt += f"\nTotal: {self.total:.2f}€"
+        print(f'{receipt}')
+
