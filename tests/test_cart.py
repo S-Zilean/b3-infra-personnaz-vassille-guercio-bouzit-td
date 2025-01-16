@@ -35,6 +35,11 @@ class TestCart(unittest.TestCase):
         self.cart.get_item_count()
         print("[Test] Get Item Count passed.")
 
+    def test_clear_cart(self):
+         print("[Test] Testing clear cart...")
+         self.cart.clear_cart()
+         clear_quantite = 0
+         self.assertEqual(sum(self.cart.items.values()), clear_quantite)
 
 if __name__ == "__main__":
-    unittest.main(buffer=False)  # Disable buffering to display prints
+    unittest.main(buffer=False)  # Disable buffering to display printsimport unittest

@@ -19,6 +19,7 @@ def main():
         cart.add_product(p2, 2)
         cart.add_product(p3, 3)
         cart.mettre_de_cote(p3)
+        
     except ValueError as e:
         print(f"Error: {e}")
 
@@ -32,6 +33,7 @@ def main():
         print(order.view_order())
         print(order.discount_code("SOLDE10"))
         print(order.place_order())
+        # print(order.cancel_order()) utilisé pour la phase de test
     except ValueError as e:
         print(f"Error: {e}")
 

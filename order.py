@@ -35,3 +35,10 @@ class Order:
         receipt += f"\nTotal: {self.total:.2f}€"
         print(f'{receipt}')
 
+    def cancel_order(self):
+     #"""Annule la commande en restaurant les stocks et réinitialisant les articles."""
+        for product, quantity in self.items.items():
+            product.stock += quantity  # Restaure les quantités en stock
+        self.items.clear()  # Vide les articles de la commande
+        self.total = 0  # Réinitialise le total de la commande
+        return f"Order cancelled and stock restored successfully!"

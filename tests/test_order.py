@@ -42,5 +42,11 @@ class TestOrder(unittest.TestCase):
       self.order.generate_receipt()
       print("[Test] Get generate_receipt passed.")
 
+    def test_cancel_order(self):
+        print("[Test] Testing cancel_order...")
+        self.order.cancel_order()
+        self.assertEqual(self.p1.stock, 5)
+        print("[Test] cancel_order passed.")
+
 if __name__ == "__main__":
     unittest.main(buffer=False)  # Disable buffering to display prints
