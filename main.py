@@ -17,6 +17,7 @@ def main():
     try:
         cart.add_product(p1, 1)
         cart.add_product(p2, 2)
+        
     except ValueError as e:
         print(f"Error: {e}")
 
@@ -29,6 +30,7 @@ def main():
         print("\nOrder:")
         print(order.view_order())
         print(order.place_order())
+        # print(order.cancel_order()) utilisé pour la phase de test
     except ValueError as e:
         print(f"Error: {e}")
 
