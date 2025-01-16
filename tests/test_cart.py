@@ -41,7 +41,13 @@ class TestCart(unittest.TestCase):
         clear_quantite = 0
         self.assertEqual(sum(self.cart.items.values()), clear_quantite)
         print("[Test] Clear cart passed.")
-        
+    
+    def test_moyenne(self):
+        moyenne = self.cart.moyenne()
+        print(f"Prix moyen par produit dans le panier : {moyenne:.2f}€")
+        expected_average = (1200.0 + 25.0 + 50.0) / 3
+        self.assertAlmostEqual(moyenne, expected_average, places=2)
+        print("[Test] Cart Average Price Calculation passed.")
 
 
 if __name__ == "__main__":
