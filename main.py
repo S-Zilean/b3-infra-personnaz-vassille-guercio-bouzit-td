@@ -18,7 +18,8 @@ def main():
         cart.add_product(p1, 1)
         cart.add_product(p2, 2)
         cart.add_product(p3, 3)
-        cart.mettre_de_cote(p3)
+        cart.mettre_de_cote(p3) #test fonction mtc
+        
     except ValueError as e:
         print(f"Error: {e}")
 
@@ -30,7 +31,7 @@ def main():
         order = Order(cart)
         print("\nOrder:")
         print(order.view_order())
-        print(order.discount_code("SOLDE10"))
+        print(order.discount_code("SOLDE10")) #test fonction discount
         print(order.place_order())
     except ValueError as e:
         print(f"Error: {e}")

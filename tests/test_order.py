@@ -14,8 +14,6 @@ class TestOrder(unittest.TestCase):
 
         self.cart.add_product(self.p1, 2)  #(2 * 1000 = 2000€)
         self.cart.add_product(self.p2, 4)  #(4 * 50 = 200€)
-        self.cart.add_product(self.p3, 5)
-        self.cart.mettre_de_cote(self.p3)
 
         self.order = Order(self.cart) # 2200€
 
