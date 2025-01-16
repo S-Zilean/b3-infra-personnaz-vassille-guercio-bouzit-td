@@ -7,37 +7,42 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from cart import Cart
 from product import Product
 
-
-class TestCart(unittest.TestCase):
+class TestProduct(unittest.TestCase):
 
     def setUp(self):
-        # Initialisation d'une instance de Cart pour les tests
-        self.cart = Cart()
-        self.cart.add_product("Laptop", 1200.0, 2)
-        self.cart.add_product("Mouse", 25.0, 4)
-        self.cart.add_product("Keyboard", 50.0, 3)
-        print("\n[Setup] Created a Cart instance with products for testing.")
+        # Setup a product instance for testing
+        self.product = Product(name="Laptop", price=1200.0, stock=5)
+        print("\n[Setup] Created a Product instance for testing.")
 
-    def test_cart_initialization(self):
-        print("[Test] Testing Cart Initialization...")
-        self.assertEqual(len(self.cart.products), 3)
-        print("[Test] Cart Initialization passed.")
+    def test_product_initialization(self):
+        print("[Test] Testing Product Initialization...")
+        self.assertEqual(self.product.name, "Laptop")
+        self.assertEqual(self.product.price, 1200.0)
+        self.assertEqual(self.product.stock, 5)
+        print("[Test] Product Initialization passed.")
 
-    def test_moyenne(self):
-        print("[Test] Testing Cart Average Price Calculation...")
-        moyenne = self.cart.moyenne()
-        print(f"Prix moyen par produit dans le panier : {moyenne:.2f}€")
-        expected_average = (1200.0 + 25.0 + 50.0) / 3
-        self.assertAlmostEqual(moyenne, expected_average, places=2)
-        print("[Test] Cart Average Price Calculation passed.")
+    def test_reduce_stock_success(self):
+        print("[Test] Testing Reduce Stock (Success Case)...")
+        print(f"Before reducing stock: {self.product.stock}")
+        self.product.reduce_stock(2)
+        print(f"After reducing stock: {self.product.stock}")
+        self.assertEqual(self.product.stock, 3)
+        print("[Test] Reduce Stock (Success Case) passed.")
 
-    def test_empty_cart_moyenne(self):
-        print("[Test] Testing Average Price for an Empty Cart...")
-        empty_cart = Cart()
-        moyenne = empty_cart.moyenne()
-        self.assertEqual(moyenne, 0)
-        print("[Test] Average Price for an Empty Cart passed.")
+    def test_reduce_stock_failure(self):
+        print("[Test] Testing Reduce Stock (Failure Case)...")
+        with self.assertRaises(ValueError) as context:
+            self.product.reduce_stock(10)
+        print(f"[Test] Caught exception: {context.exception}")
+        self.assertEqual(str(context.exception), "Insufficient stock for Laptop. Available: 5")
+        print("[Test] Reduce Stock (Failure Case) passed.")
+
+    def test_str_representation(self):
+        print("[Test] Testing String Representation...")
+        result = str(self.product)
+        print(f"String representation: {result}")
+        self.assertEqual(result, "Laptop (1200.0€, Stock: 5)")
+        print("[Test] String Representation passed.")
 
 if __name__ == "__main__":
-    unittest.main(buffer=False)
-
+    unittest.main(buffer=False)  # Disable buffering to display prints
