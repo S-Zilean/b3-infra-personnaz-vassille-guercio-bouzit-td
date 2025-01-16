@@ -20,14 +20,15 @@ class Cart:
 
     def calculate_total(self):
         return sum(product.price * quantity for product, quantity in self.items.items())
-   def moyenne(self):
-        return self.calculate_total() / sum(quantity for product, quantity in self.items.items())
 
     def display_cart(self):
         if not self.items:
             return "Your cart is empty."
         return "\n".join([f"{product.name} x {quantity} - {product.price * quantity}€"
                           for product, quantity in self.items.items()])
+    
+    def moyenne(self):
+        return self.calculate_total() / sum(quantity for product, quantity in self.items.items())
     
     def get_item_count(self):
         print(f'il y a {sum(quantity for quantity in self.items.values())} produits dans votre panier')    
