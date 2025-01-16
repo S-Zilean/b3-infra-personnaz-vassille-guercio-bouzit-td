@@ -34,7 +34,9 @@ class Cart:
         if product in self.items :
             quantity = self.items[product]
             self.mdc[product] = self.mdc.get(product, 0) + quantity
-    
+            del self.items[product]
+
     def clear_cart(self):
         for product in list(self.items.keys()) :
             del self.items[product]
+
