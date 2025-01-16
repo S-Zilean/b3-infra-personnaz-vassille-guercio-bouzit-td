@@ -20,6 +20,8 @@ class Cart:
 
     def calculate_total(self):
         return sum(product.price * quantity for product, quantity in self.items.items())
+   def moyenne(self):
+        return self.calculate_total() / sum(quantity for product, quantity in self.items.items())
 
     def display_cart(self):
         if not self.items:

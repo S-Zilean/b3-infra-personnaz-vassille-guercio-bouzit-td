@@ -26,7 +26,6 @@ class TestOrder(unittest.TestCase):
         
         print("\n[Setup] Created a Cart instance for testing.")
 
-    # Pour executer le test, depuis la racine projet faire : python -m unittest tests/test_order.py
     def test_discount_code(self):
         print("[Test] Discount order...")
         self.order.discount_code("SOLDE10")
