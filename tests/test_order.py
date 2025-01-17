@@ -45,18 +45,22 @@ class TestOrder(unittest.TestCase):
 
 
     #Fonctions de test Nicolas 
-     
     def test_update_order(self):
-        self.order.update_order(self.laptop, 1)
-        self.assertEqual(self.order.items[self.laptop], 1)
+        print("[Test] Testing Update Order...")
+        self.order.update_order(self.p1, 1)
+        self.assertEqual(self.order.items[self.p1], 1)
         expected_total = sum(p.price * q for p, q in self.order.items.items())
         self.assertAlmostEqual(self.order.total, expected_total)
+        print("[Test] Update Order passed.")
 
 
     def test_update_order_invalid_product(self):
+        print("[Test] Testing Update Order Invalid Product...")
         fake_product = Product(name="Fake", price=100.0, stock=1)
         result = self.order.update_order(fake_product, 1)
         self.assertEqual(result, "Product not found in the order.")
+        print("[Test] Update Order Invalid Product passed.")
+
 
 if __name__ == "__main__":
     unittest.main(buffer=False)  # Disable buffering to display prints
