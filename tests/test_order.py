@@ -6,6 +6,7 @@ import unittest
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from cart import Cart
+import unittest
 from product import Product
 from order import Order
 
@@ -36,12 +37,23 @@ class TestOrder(unittest.TestCase):
         print("[Test] Testing generate_receipt...")
         self.order.generate_receipt()
         print("[Test] Get generate_receipt passed.")
+        
+    def test_update_order(self):
+        self.order.update_order(self.laptop, 1)
+        self.assertEqual(self.order.items[self.laptop], 1)
+        expected_total = sum(p.price * q for p, q in self.order.items.items())
+        self.assertAlmostEqual(self.order.total, expected_total)
 
     def test_cancel_order(self):
         print("[Test] Testing cancel_order...")
         self.order.cancel_order()        
         self.assertEqual(self.p1.stock, 7)
         print("[Test] cancel_order passed.")
+
+    def test_update_order_invalid_product(self):
+        fake_product = Product(name="Fake", price=100.0, stock=1)
+        result = self.order.update_order(fake_product, 1)
+        self.assertEqual(result, "Product not found in the order.")
 
 if __name__ == "__main__":
     unittest.main(buffer=False)  # Disable buffering to display prints
