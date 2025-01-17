@@ -41,4 +41,14 @@ class Order:
             product.stock += quantity  # Restaure les quantités en stock
         self.items.clear()  # Vide les articles de la commande
         self.total = 0  # Réinitialise le total de la commande
-        return f"Order cancelled and stock restored successfully!"
+        return f"Order cancelled and stock restored successfully!"  
+    
+    def discount_code(self, code: str):
+        codes = {"SOLDE10": 0.1, "SOLDE20": 0.2}
+        if code in codes:
+            remise = codes[code]
+            self.discount = self.total * remise
+            self.total -= self.discount
+            return f"Code apply successfully! Reduction: {self.discount:.2f}€"
+        else:
+            return "Code invalid"
