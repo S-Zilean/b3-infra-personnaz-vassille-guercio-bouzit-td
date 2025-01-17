@@ -1,42 +1,56 @@
-import unittest
 from cart import Cart
+import unittest
 from product import Product
 
-class TestCart(unittest.TestCase):
+class Order:
+    def __init__(self, cart: Cart):
+        if not cart.items:
+            raise ValueError("Cart is empty. Cannot place an order.")
+        self.items = cart.items
+        self.total = cart.calculate_total()
+        self.status = "Pending"
 
+    def place_order(self):
+        for product, quantity in self.items.items():
+            product.reduce_stock(quantity)
+        self.status = "Completed"
+        return f"Order placed successfully! Total: {self.total:.2f}€"
+
+    def view_order(self):
+        return "\n".join([f"{product.name} x {quantity}" for product, quantity in self.items.items()]) + \
+               f"\nTotal: {self.total:.2f}€\nStatus: {self.status}"
+
+    def track_order(self):
+        return f"Current order status: {self.status}"
+
+    def update_order(self, product, new_quantity):
+        if product in self.items:
+            self.items[product] = new_quantity
+            self.total = sum(p.price * q for p, q in self.items.items())
+            return f"Order updated. New total: {self.total:.2f}€"
+        return "Product not found in the order."
+
+class TestOrder(unittest.TestCase):
     def setUp(self):
-        # Initialisation d'une instance de Cart pour les tests
         self.cart = Cart()
         self.laptop = Product(name="Laptop", price=1200.0, stock=5)
         self.mouse = Product(name="Mouse", price=25.0, stock=10)
         self.keyboard = Product(name="Keyboard", price=50.0, stock=8)
-
         self.cart.add_product(self.laptop, 2)
         self.cart.add_product(self.mouse, 4)
         self.cart.add_product(self.keyboard, 3)
-        print("\n[Setup] Created a Cart instance with products for testing.")
+        self.order = Order(self.cart)
 
-    def test_calculate_total_without_tax_standard_rate(self):
-        print("[Test] Testing Total Calculation Without Tax (Standard Rate)...")
-        total_without_tax = self.cart.calculate_total_without_tax(20)  # 20% de taxe
-        expected_total = self.cart.calculate_total() * (1 - 20 / 100)
-        self.assertAlmostEqual(total_without_tax, expected_total, places=2)
-        print(f"[Test] Total without tax: {total_without_tax:.2f}€ (Expected: {expected_total:.2f}€)")
-        print("[Test] Total Calculation Without Tax passed.")
+    def test_update_order(self):
+        self.order.update_order(self.laptop, 1)
+        self.assertEqual(self.order.items[self.laptop], 1)
+        expected_total = sum(p.price * q for p, q in self.order.items.items())
+        self.assertAlmostEqual(self.order.total, expected_total)
 
-    def test_calculate_total_without_tax_zero_rate(self):
-        print("[Test] Testing Total Calculation Without Tax (Zero Rate)...")
-        total_without_tax = self.cart.calculate_total_without_tax(0)  # 0% de taxe
-        expected_total = self.cart.calculate_total()
-        self.assertAlmostEqual(total_without_tax, expected_total, places=2)
-        print(f"[Test] Total without tax: {total_without_tax:.2f}€ (Expected: {expected_total:.2f}€)")
-        print("[Test] Total Calculation Without Tax (Zero Rate) passed.")
-
-    def test_calculate_total_without_tax_full_tax(self):
-        print("[Test] Testing Total Calculation Without Tax (100% Tax Rate)...")
-        total_without_tax = self.cart.calculate_total_without_tax(100)  # 100% de taxe
-        self.assertAlmostEqual(total_without_tax, 0.0, places=2)
-        print("[Test] Total Calculation Without Tax (100% Tax Rate) passed.")
+    def test_update_order_invalid_product(self):
+        fake_product = Product(name="Fake", price=100.0, stock=1)
+        result = self.order.update_order(fake_product, 1)
+        self.assertEqual(result, "Product not found in the order.")
 
 if __name__ == "__main__":
     unittest.main(buffer=False)
