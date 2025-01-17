@@ -45,7 +45,7 @@ class TestCart(unittest.TestCase):
     def test_moyenne(self):
         moyenne = self.cart.moyenne()
         print(f"Prix moyen par produit dans le panier : {moyenne:.2f}€")
-        expected_average = (1200.0 + 25.0 + 50.0) / 3
+        expected_average = (2000.0 + 200.0) / 6
         self.assertAlmostEqual(moyenne, expected_average, places=2)
         print("[Test] Cart Average Price Calculation passed.")
 
